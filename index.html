@@ -3,48 +3,294 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plates</title>
+<title>Plates: Lift. Eat. Repeat.</title>
+<meta name="description" content="Plates is a strength training log and food tracker for iPhone. It plans every set, rounds to the plates you own, and adjusts your macros on lifting days. No account, no ads, no tracking.">
+<meta property="og:title" content="Plates: Lift. Eat. Repeat.">
+<meta property="og:description" content="Strength training that works out every set for you, plus calorie and macro tracking that adjusts on lifting days.">
+<meta property="og:image" content="https://willlstone.github.io/plates-site/img/workout.jpg">
+<meta property="og:url" content="https://willlstone.github.io/plates-site/">
+<meta name="theme-color" content="#0d0e10">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <style>
 :root {
   --ink: #0d0e10;
+  --card: #16171a;
   --chalk: #f2f2ee;
+  --body: #d6d7d2;
   --dim: #9a9ca3;
   --brand: #c8f135;
   --line: #24262b;
+  --blue: #6f9bff;
+  --orange: #ff9f5a;
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
   background: var(--ink);
   color: var(--chalk);
   font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-main { max-width: 680px; margin: 0 auto; padding: 48px 20px 80px; }
-h1 { font-size: 40px; line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 8px; }
-h1.hero { font-size: 56px; color: var(--brand); }
-h2 { font-size: 20px; margin: 40px 0 8px; padding-top: 24px; border-top: 1px solid var(--line); }
-h3 { font-size: 16px; margin: 24px 0 4px; }
-p, li { color: #d6d7d2; }
-.lead { font-size: 18px; color: var(--chalk); }
-.meta, .note, .back { color: var(--dim); font-size: 14px; }
-.back { margin: 0 0 24px; }
-.note { margin-top: 32px; }
 a { color: var(--brand); text-decoration: none; }
 a:hover { text-decoration: underline; }
-ul { padding-left: 20px; }
-.tagline { font-size: 22px; font-weight: 600; color: var(--dim); margin: 0 0 16px; }
-.links { list-style: none; padding: 0; display: flex; gap: 24px; font-weight: 600; }
+img { display: block; max-width: 100%; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* Header */
+header { padding: 20px 0; }
+header .wrap { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 10px; color: var(--chalk); font-weight: 700; font-size: 18px; }
+.brand:hover { text-decoration: none; }
+.brand img { width: 32px; height: 32px; border-radius: 8px; }
+nav { display: flex; gap: 22px; font-size: 15px; }
+nav a { color: var(--dim); }
+nav a:hover { color: var(--chalk); text-decoration: none; }
+
+/* Hero */
+.hero { padding: 56px 0 72px; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+.eyebrow { color: var(--brand); font-weight: 700; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 16px; }
+h1 { font-size: clamp(44px, 7vw, 76px); line-height: 1.02; letter-spacing: -0.035em; margin: 0 0 20px; }
+h1 span { color: var(--brand); }
+.lead { font-size: 19px; color: var(--body); max-width: 34em; margin: 0 0 32px; }
+.cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+.store {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--brand); color: var(--ink);
+  padding: 13px 22px; border-radius: 999px; font-weight: 700; font-size: 16px;
+}
+.store:hover { text-decoration: none; filter: brightness(1.05); }
+.store svg { width: 20px; height: 20px; }
+.cta small { color: var(--dim); font-size: 14px; }
+.pills { list-style: none; padding: 0; margin: 28px 0 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.pills li { border: 1px solid var(--line); color: var(--dim); border-radius: 999px; padding: 4px 12px; font-size: 13px; }
+
+/* Phone frame */
+.phone {
+  position: relative;
+  width: 100%; max-width: 300px;
+  aspect-ratio: 1320 / 2868;
+  border-radius: 44px;
+  padding: 10px;
+  background: #050506;
+  box-shadow: 0 0 0 1.5px #2c2e33, 0 40px 80px -20px rgba(0,0,0,0.8), 0 0 120px -30px rgba(200,241,53,0.25);
+}
+.phone img { width: 100%; height: 100%; object-fit: cover; border-radius: 34px; }
+.hero .phones { position: relative; display: flex; justify-content: center; isolation: isolate; }
+.hero .phones .phone:nth-child(2) {
+  position: absolute; max-width: 240px; right: -10px; top: 70px;
+  transform: rotate(6deg); opacity: 0.9; z-index: -1;
+}
+
+/* Sections */
+section.feature { padding: 88px 0; border-top: 1px solid var(--line); }
+.feature .wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.feature.flip .text { order: 2; }
+.feature .phones { display: flex; justify-content: center; }
+h2 { font-size: clamp(32px, 4.5vw, 46px); line-height: 1.08; letter-spacing: -0.025em; margin: 0 0 16px; }
+.feature p { color: var(--body); font-size: 17px; margin: 0 0 24px; }
+.feature ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+.feature li { position: relative; padding-left: 26px; color: var(--body); }
+.feature li::before {
+  content: ""; position: absolute; left: 0; top: 0.55em;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--brand);
+}
+.feature.fuel li::before { background: var(--blue); }
+.feature.streaks li::before { background: var(--orange); }
+
+/* Privacy band */
+.privacy { padding: 88px 0; border-top: 1px solid var(--line); }
+.privacy h2 { text-align: center; }
+.privacy .sub { text-align: center; color: var(--body); font-size: 17px; max-width: 36em; margin: 0 auto 40px; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.tile { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.tile b { display: block; font-size: 17px; margin-bottom: 6px; }
+.tile span { color: var(--dim); font-size: 15px; }
+
+/* Closing */
+.closing { padding: 96px 0; border-top: 1px solid var(--line); text-align: center; }
+.closing img.icon { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 24px; }
+.closing h2 { margin-bottom: 12px; }
+.closing p { color: var(--body); font-size: 17px; margin: 0 0 28px; }
+.closing .cta { justify-content: center; }
+
+footer { border-top: 1px solid var(--line); padding: 32px 0 48px; color: var(--dim); font-size: 14px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+footer nav { gap: 20px; }
+footer p { margin: 0; max-width: 36em; }
+
+@media (max-width: 860px) {
+  .hero { padding: 24px 0 56px; }
+  .hero .wrap, .feature .wrap { grid-template-columns: 1fr; gap: 40px; }
+  .feature.flip .text { order: 0; }
+  .hero .phones .phone:nth-child(2) { display: none; }
+  .phone { max-width: 260px; }
+  section.feature, .privacy, .closing { padding: 64px 0; }
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 520px) {
+  nav.top a:not(:last-child) { display: none; }
+  .grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="./"><img src="img/icon.svg" alt="">Plates</a>
+    <nav class="top">
+      <a href="#train">Train</a>
+      <a href="#fuel">Fuel</a>
+      <a href="#streaks">Streaks</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
 <main>
-<h1 class="hero">Plates</h1>
-<p class="tagline">Lift. Eat. Repeat.</p>
-<p class="lead">Strength and macro tracking for iPhone. Your data stays on your phone.</p>
-<ul class="links">
-<li><a href="support.html">Support</a></li>
-<li><a href="privacy.html">Privacy policy</a></li>
-</ul>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Strength &amp; macro tracker for iPhone</p>
+      <h1>Lift. Eat.<br><span>Repeat.</span></h1>
+      <p class="lead">Plates plans every set for you: the weight, the reps and the plates to load. Then it sets your calories and macros, with more carbs on lifting days.</p>
+      <div class="cta">
+        <!-- When the app is live, set href to the App Store link and change the label to "Download on the App Store". -->
+        <a class="store" href="mailto:plates.lift.eat.repeat@gmail.com?subject=Tell%20me%20when%20Plates%20launches">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.87-.76-1.47.02-2.83.86-3.59 2.18-1.53 2.66-.39 6.6 1.1 8.75.73 1.05 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.4 1.2-2.46-.03-.01-2.3-.88-2.32-3.5zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.65-1.05 1.68-.92 2.67.97.08 1.96-.49 2.56-1.22z"/></svg>
+          Coming soon to the App Store
+        </a>
+        <small>Free of ads, accounts and tracking.</small>
+      </div>
+      <ul class="pills">
+        <li>Training max programs</li>
+        <li>Plate math</li>
+        <li>Barcode &amp; label scan</li>
+        <li>Apple Health</li>
+        <li>lb or kg</li>
+      </ul>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/workout.jpg" alt="A squat workout in Plates: sets at 70, 80 and 90 percent of training max with plates per side, an AMRAP set logged at 285 pounds for 6 reps, and a rest timer."></div>
+      <div class="phone"><img src="img/today.jpg" alt="" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature" id="train">
+  <div class="wrap">
+    <div class="text">
+      <p class="eyebrow">Train</p>
+      <h2>Every set, worked out before you walk in.</h2>
+      <p>Pick your starting numbers once. Plates builds percentage-based cycles on a training max, with warm-ups, a heavy top set for as many reps as you can, and supplemental volume.</p>
+      <ul>
+        <li>Every weight rounded to the plates you own, with plates per side on each set</li>
+        <li>Rest timer on your Lock Screen and in the Dynamic Island</li>
+        <li>Log a full set in one tap, or exactly the reps you got when one falls short</li>
+        <li>Estimated 1RM and personal records worked out automatically</li>
+        <li>Training maxes go up each cycle when you hit your reps, and hold when you don't</li>
+        <li>Assistance work balanced across push, pull and core, or build your own program</li>
+      </ul>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/today.jpg" alt="The Today screen in Plates, showing today's squat sets, training maxes for four lifts, and calories and macros left." loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature flip fuel" id="fuel">
+  <div class="wrap">
+    <div class="text">
+      <p class="eyebrow" style="color: var(--blue)">Fuel</p>
+      <h2>Macros that know it's squat day.</h2>
+      <p>Plates sets daily calorie and macro targets from your stats and goal, and adds carbs on the days you lift. Rest days drop back automatically.</p>
+      <ul>
+        <li>Search 12,000+ foods from the USDA</li>
+        <li>Scan a barcode, or read a nutrition label with the camera</li>
+        <li>Snap a photo of your meal and get an estimate on your iPhone with Apple Intelligence (supported iPhones)</li>
+        <li>Save meals you eat often and log them in one tap</li>
+        <li>Portions in grams, ounces, cups or servings</li>
+      </ul>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/fuel.jpg" alt="The Fuel screen: 1,013 calories left out of 3,135, with protein, carbs and fat rings, and a note that squat day adds 250 calories from carbs." loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature streaks" id="streaks">
+  <div class="wrap">
+    <div class="text">
+      <p class="eyebrow" style="color: var(--orange)">Consistency</p>
+      <h2>Streaks that count weeks, not days.</h2>
+      <p>A week counts when you finish your planned workouts, so rest days never break your streak. Plates is built to keep you coming back, not to make you feel bad.</p>
+      <ul>
+        <li>Shields cover a missed week; pause for illness or travel</li>
+        <li>A five-week view of workouts, PRs and food logged</li>
+        <li>Milestones like the 1,000 lb club</li>
+        <li>Optional reminders that encourage, never nag</li>
+      </ul>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/consistency.jpg" alt="The Consistency screen: a weekly training streak, shields, and a five-week calendar of workouts and food logged." loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="feature flip" id="setup">
+  <div class="wrap">
+    <div class="text">
+      <p class="eyebrow">Setup</p>
+      <h2>Six quick steps, then you lift.</h2>
+      <p>Tell Plates your lifts, your lifting days and your goal. It works out training maxes, daily targets and a full program. Want to look around first? Try the sample data.</p>
+    </div>
+    <div class="phones">
+      <div class="phone"><img src="img/targets.jpg" alt="Setup in Plates: the daily calorie and macro targets worked out from your stats and goal." loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<section class="privacy" id="privacy">
+  <div class="wrap">
+    <p class="eyebrow" style="text-align: center">Your data stays yours</p>
+    <h2>No account. No ads. No tracking.</h2>
+    <p class="sub">Everything lives on your iPhone. Plates doesn't collect any of it: not your workouts, not your meals, not who you are.</p>
+    <div class="grid">
+      <div class="tile"><b>On your iPhone</b><span>Works offline. Nothing is sent to us.</span></div>
+      <div class="tile"><b>Your own iCloud</b><span>Optional sync through your private iCloud.</span></div>
+      <div class="tile"><b>Apple Health</b><span>Optionally save workouts, body weight and nutrition.</span></div>
+      <div class="tile"><b>Export any time</b><span>Back up everything to a file you keep.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <img class="icon" src="img/icon.svg" alt="Plates app icon">
+    <h2>Lift. Eat. Repeat.</h2>
+    <p>Plates for iPhone. Pounds or kilograms.</p>
+    <div class="cta">
+      <a class="store" href="mailto:plates.lift.eat.repeat@gmail.com?subject=Tell%20me%20when%20Plates%20launches">Coming soon to the App Store</a>
+    </div>
+  </div>
+</section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <p>Plates is a training log and food tracker, not medical advice. Check with a doctor before starting a new training program or diet.</p>
+    <nav>
+      <a href="support.html">Support</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="mailto:plates.lift.eat.repeat@gmail.com">Contact</a>
+    </nav>
+  </div>
+</footer>
+
 </body>
 </html>
